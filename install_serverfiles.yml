@@ -1,0 +1,28 @@
+---
+- name: "Install PWServer files"
+  hosts: localhost
+
+  tasks:
+    - name: "Extract PWServer"
+      become: true
+      unarchive:
+        src: ./files/PWServer.zip
+        dest: /
+
+    - name: "Extract pwAdmin"
+      become: true
+      unarchive:
+        src: ./files/pwAdmin.zip
+        dest: /opt/apache-tomcat-9.0.64/webapps/
+
+    - name: "Remove index.html"
+      become: true
+      file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: "Extract htdocs"
+      become: true
+      unarchive:
+        src: ./files/htdocs.zip
+        dest: /var/www/html

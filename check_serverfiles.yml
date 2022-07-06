@@ -1,0 +1,70 @@
+---
+- name: "Check PWServer files"
+  hosts: localhost
+  
+  tasks:
+    - name: "Check PWServer.zip"
+      ansible.builtin.stat:
+        checksum_algorithm: sha256
+        path: ./files/PWServer.zip
+      register: output_stat
+
+    - name: "Fail if the file does not have same sha256"
+      ansible.builtin.fail:
+        msg: "File Modified, check if the file isn't corrupted"
+      when: output_stat.stat.checksum  != 'a438dbb2bca29df56f122711928e279fc92efaa41840ffeebdbe08b7e74f1f39'
+
+    - name: "Check pwAdmin.zip"
+      ansible.builtin.stat:
+        checksum_algorithm: sha256
+        path: ./files/pwAdmin.zip
+      register: output_stat
+
+    - name: "Fail if the file does not have same sha256"
+      ansible.builtin.fail:
+        msg: "File Modified, check if the file isn't corrupted"
+      when: output_stat.stat.checksum  != '006fb2b07ec4471795dfb18283c08ce1edeab79c0409f508672242af0a010011'
+
+    - name: "Check lib.zip"
+      ansible.builtin.stat:
+        checksum_algorithm: sha256
+        path: ./files/lib.zip
+      register: output_stat
+
+    - name: "Fail if the file does not have same sha256"
+      ansible.builtin.fail:
+        msg: "File Modified, check if the file isn't corrupted"
+      when: output_stat.stat.checksum  != 'e2d6587b1ffa00241b98fbd21e85554035dd17a40001eff7762aec43400ecb28'
+
+    - name: "Check lib32.zip"
+      ansible.builtin.stat:
+        checksum_algorithm: sha256
+        path: ./files/lib32.zip
+      register: output_stat
+
+    - name: "Fail if the file does not have same sha256"
+      ansible.builtin.fail:
+        msg: "File Modified, check if the file isn't corrupted"
+      when: output_stat.stat.checksum  != 'c186e8f01622a4775e0fb80ca20bf47bc3e9dfef03968d09cb424009645bdf24'
+
+    - name: "Check htdocs.zip"
+      ansible.builtin.stat:
+        checksum_algorithm: sha256
+        path: ./files/htdocs.zip
+      register: output_stat
+
+    - name: "Fail if the file does not have same sha256"
+      ansible.builtin.fail:
+        msg: "File Modified, check if the file isn't corrupted"
+      when: output_stat.stat.checksum  != 'a0a3cda2e3ea7534ca7b233ba3a1b5605ffc7cf2839d7b793d3659e18cdac193'
+
+    - name: "Check dbo.sql"
+      ansible.builtin.stat:
+        checksum_algorithm: sha256
+        path: ./files/dbo.sql
+      register: output_stat
+
+    - name: "Fail if the file does not have same sha256"
+      ansible.builtin.fail:
+        msg: "File Modified, check if the file isn't corrupted"
+      when: output_stat.stat.checksum  != '0e2cf1a9d036d7adae587852a575b8abb43e25a8d22bfbb5b2069fcc3f7f0e69'
