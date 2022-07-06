@@ -1,0 +1,55 @@
+---
+- name: "Installation for PW Servers"
+  hosts: localhost
+
+  tasks:
+    - name: "Add i386 Architecture"
+      become: true
+      shell: dpkg --add-architecture i386
+    
+    - name: "Updating Ubuntu Packages"
+      become: true
+      apt:
+        update_cache: yes 
+        force_apt_get: yes 
+        cache_valid_time: 60
+
+    - name: "Install Dependencies and Programs"
+      become: true
+      apt:
+        name: "{{ item.name }}"
+        state: latest
+      with_items:
+        - { name: unzip }
+        - { name: openjdk-8-jre }
+        - { name: libxml2:i386 }
+        - { name: libatk-adaptor:i386 }
+        - { name: libgail-common:i386 }
+        - { name: libstdc++6:i386 }
+        - { name: libgcc1:i386 }
+        - { name: zlib1g:i386 }
+        - { name: libncurses5:i386 }
+        - { name: libstdc++5 }
+        - { name: libc6-i386 }
+        - { name: lib32stdc++6 }
+        - { name: lib32gcc-s1 }
+        - { name: zlib1g }
+        - { name: lib32z1 }
+        - { name: mysql-server }
+        - { name: php }
+        - { name: apache2 }
+
+    - name: "Download Tomcat 9.0.64"
+      become: true
+      get_url:
+        url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.64/bin/apache-tomcat-9.0.64.zip"
+        dest: /tmp/apache-tomcat-9.0.64.zip
+        mode: '0744'
+        checksum: sha256:418226b1bc64870e33a34f006ccf42e3cb5d1cf9ad03adf6357fd0d4027a665e
+    
+    - name: "Extract Tomcat 9.0.64"
+      become: true
+      unarchive:
+        src: /tmp/apache-tomcat-9.0.64.zip
+        dest: /opt
+
