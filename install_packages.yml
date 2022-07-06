@@ -21,6 +21,7 @@
         state: latest
       with_items:
         - { name: unzip }
+        - { name: python3-pip }
         - { name: openjdk-8-jre }
         - { name: libxml2:i386 }
         - { name: libatk-adaptor:i386 }
@@ -38,6 +39,11 @@
         - { name: mysql-server }
         - { name: php }
         - { name: apache2 }
+
+    - name: Install PyMySQL python package
+      become: true
+      pip:
+        name: PyMySQL
 
     - name: "Download Tomcat 9.0.64"
       become: true

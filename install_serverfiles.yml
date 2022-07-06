@@ -26,3 +26,32 @@
       unarchive:
         src: ./files/htdocs.zip
         dest: /var/www/html
+
+    - name: "Extract lib"
+      become: true
+      unarchive:
+        src: ./files/lib.zip
+        dest: /lib/
+
+    - name: "Extract lib32"
+      become: true
+      unarchive:
+        src: ./files/lib32.zip
+        dest: /lib32/
+
+    - name: create a new database  
+      become: true
+      mysql_db: 
+        name: dbo 
+        state: present 
+        login_user: root
+        login_password: root
+
+    - name: Restore database
+      become: true
+      mysql_db:
+        name: dbo
+        state: import
+        target: ./files/dbo.sql
+        login_user: root
+        login_password: root
